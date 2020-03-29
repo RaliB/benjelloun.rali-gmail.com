@@ -1,0 +1,28 @@
+private void buttonMatchesRunning_Click(object sender, EventArgs e)
+        {
+            WebRequest request = HttpWebRequest.Create("https://api.pandascore.co/csgo/matches/running?token=Z6NMfMOR_sgphX2aFt2PkJD1elVs6k7BGULPuj3WXpz2v__zd-4");
+            WebResponse response = request.GetResponse();
+            StreamReader reader = new StreamReader(response.GetResponseStream());
+
+            string RunningMatch_JSON = reader.ReadToEnd();
+
+            RunningMatch[] myRunningMatch = Newtonsoft.Json.JsonConvert.DeserializeObject<RunningMatch[]>(RunningMatch_JSON);
+
+            listViewListeMatchs.Items.Clear();
+
+            foreach (RunningMatch tournament in myRunningMatch)
+            {
+                string[] ligneMatch;
+                if (games.end_at == null)
+                {
+                    ligneMatch = new string[] { games.begin_at.ToString(), "Inconnue", games.forfeit, games.match_id, games.status, games.video_url, games.winner };
+                }
+                else
+                {
+                    ligneMatch = new string[] { games.begin_at.ToString(), games.end_at.ToString(), games.forfeit, games.match_id, games.status, games.video_url, games.winner };
+                }
+                var lvi = new ListViewItem(ligneMatch);
+                lvi.Tag = ligneMatch;
+                listViewListeMatchs.Items.Add(lvi);
+            }
+        }
