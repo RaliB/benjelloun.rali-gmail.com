@@ -10,7 +10,7 @@ private void buttonMatchesRunning_Click(object sender, EventArgs e)
 
             listViewListeMatchs.Items.Clear();
 
-            foreach (RunningMatch tournament in myRunningMatch)
+            foreach (RunningMatch match in myRunningMatch)
             {
                 string[] ligneMatch;
                 if (games.end_at == null)
